@@ -1,6 +1,6 @@
-//file to use express
-
 import express from 'express';
+
+import './database';
 
 import homeRoutes from './routes/home';
 import userRoutes from './routes/user';
