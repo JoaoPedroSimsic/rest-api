@@ -3,7 +3,6 @@ import bcryptjs from 'bcryptjs';
 
 export default class User extends Model {
   static init(sequelize) {
-    console.log('model user read');
     super.init(
       {
         name: {

@@ -12,6 +12,7 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
     "mariadb": "^3.4.0",
     "sequelize": "^6.37.5",
     "sequelize-cli": "^6.6.2"
