@@ -3,7 +3,7 @@ import Note from '../models/Note';
 class NoteController {
   async index(req, res) {
     const note = await Note.findAll();
-    res.json(note);
+    return res.status(200).json(note);
   }
 
   async show(req, res) {
@@ -18,13 +18,13 @@ class NoteController {
 
       const note = await Note.findByPk(id);
       if (!note) {
-        return res.status(400).json({
+        return res.status(404).json({
           errors: ['Note does not exists'],
         });
       }
-      return res.json(note);
+      return res.status(200).json(note);
     } catch (e) {
-      return res.status(400).json({
+      return res.status(500).json({
         errors: e.errors
           ? e.errors.map((err) => err.message)
           : ['An unexpected error occurred'],
@@ -36,14 +36,19 @@ class NoteController {
     const { userId } = req;
     const data = req.body;
     try {
+      if (!data.message) {
+        return res.status(400).json({
+          errors: ['Message is required'],
+        });
+      }
       const note = await Note.create({
         ...data,
         created_by: userId,
         updated_by: userId,
       });
-      return res.json(note);
+      return res.status(201).json(note);
     } catch (e) {
-      return res.status(400).json({
+      return res.status(500).json({
         errors: e.errors
           ? e.errors.map((err) => err.message)
           : ['An unexpected error occurred'],
@@ -63,10 +68,16 @@ class NoteController {
         });
       }
 
+      if (!data.message) {
+        return res.status(400).json({
+          errors: ['Message is required'],
+        });
+      }
+
       const note = await Note.findByPk(id);
 
       if (!note) {
-        return res.status(400).json({
+        return res.status(404).json({
           errors: ['Note does not exists'],
         });
       }
@@ -74,9 +85,9 @@ class NoteController {
         ...data,
         updated_by: userId,
       });
-      return res.json(updatedNote);
+      return res.status(200).json(updatedNote);
     } catch (e) {
-      return res.status(400).json({
+      return res.status(500).json({
         errors: e.errors
           ? e.errors.map((err) => err.message)
           : ['An unexpected error occurred'],
@@ -88,22 +99,22 @@ class NoteController {
     try {
       const { id } = req.params;
 
-      if (!id) {
+      if (!id || isNaN(id)) {
         return res.status(400).json({
-          errors: ['Missing ID'],
+          errors: ['Invalid or missing ID'],
         });
       }
 
       const note = await Note.findByPk(id);
 
       if (!note) {
-        return res.status(400).json({
+        return res.status(404).json({
           errors: ['Note does not exists'],
         });
       }
       await note.destroy();
-      return res.json({
-        deleted: true,
+      return res.status(200).json({
+        message: 'Note successfully deleted',
       });
     } catch (e) {
       return res.status(400).json({
