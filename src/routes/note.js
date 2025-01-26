@@ -7,5 +7,7 @@ const router = new Router();
 router.get('/', loginRequired, NoteController.index); // show all posts
 router.get('/:id', loginRequired, NoteController.show); // show a specific post
 router.post('/post', loginRequired, NoteController.store); // create a post
-router.update('/update', loginRequired, NoteController.update); // update an existing post
-router.delete('/delete', loginRequired, NoteController.delete); // delete a post
+router.put('/:id', loginRequired, NoteController.update); // update an existing post
+router.delete('/:id', loginRequired, NoteController.delete); // delete a post
+
+export default router;

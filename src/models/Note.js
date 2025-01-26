@@ -9,11 +9,11 @@ export default class Note extends Model {
           defaultValue: '',
         },
         created_by: {
-          type: Sequelize.STRING,
+          type: Sequelize.INTEGER,
           defaultValue: '',
         },
         updated_by: {
-          type: Sequelize.STRING,
+          type: Sequelize.INTEGER,
           defaultValue: '',
         },
       },
