@@ -1,6 +1,6 @@
 class HomeController {
   async index(req, res) {
-    res.status(200).json("Connected to the server");
+    res.status(200).json('Connected to the API');
   }
 }
 
